@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BookRecommender — Discover your next favorite book</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+  <a class="brand" href="#home"><span class="brand-icon">▣</span><span>Book<span class="green">Recommender</span></span></a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+  <nav id="navLinks"><a class="nav-link active" href="#home">⌂ &nbsp;Home</a><a class="nav-link" href="#explore">⌕ &nbsp;Explore</a><a class="nav-link" href="#genres">▦ &nbsp;Genres</a><a class="nav-link" href="#recommendations">✦ &nbsp;Recommendations</a><a class="nav-link" href="#about">ⓘ &nbsp;About</a></nav>
+  <form class="nav-search" id="navSearch"><span>⌕</span><input id="navSearchInput" placeholder="Search books..." aria-label="Search books"><button aria-label="Submit search">→</button></form>
+  <button class="profile" title="Profile">♟</button>
+</header>
+<main class="page" id="home">
+  <section class="hero-grid">
+    <div class="hero">
+      <div class="hero-copy"><p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p><h1>Discover Your Next<br><span>Favorite Book</span></h1><p class="hero-desc">Get personalized book recommendations based on your interests, past behavior, and community ratings.</p>
+        <form class="hero-search" id="heroSearch"><span>⌕</span><input id="heroSearchInput" placeholder="Search for books, authors, or genres..." aria-label="Search for books"><button>Search</button></form>
+        <div class="pills"><button data-genre="Fantasy">Fantasy</button><button data-genre="Science Fiction">Science Fiction</button><button data-genre="Romance">Romance</button><button data-genre="Mystery">Mystery</button><button data-genre="Self-Help">Self-Help</button><button data-genre="Technology">Technology</button></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="sun-glow"></div><div class="leaf leaf-one"></div><div class="leaf leaf-two"></div><div class="hero-books"><div class="book book-a"><span>GOOD BOOKS<br>BRIGHTER MINDS</span></div><div class="book book-b"></div><div class="book book-c"></div></div><div class="plant"><i></i><i></i><i></i><b></b></div><div class="hero-quote">“A reader lives<br> a thousand lives<br> before they die”</div></div>
+    </div>
+    <aside class="hero-side">
+      <div class="stats-card"><div class="stats"><div><span class="stat-icon">▣</span><strong>100K+</strong><small>Books</small></div><div><span class="stat-icon users">♟</span><strong>50K+</strong><small>Users</small></div><div><span class="stat-icon star">★</span><strong>4.7</strong><small>Avg Rating</small></div></div><blockquote>“Books are a uniquely portable magic.”<cite>— Stephen King</cite></blockquote></div>
+      <a class="personal-card" href="#recommendations"><span class="personal-leaf">❧</span><span><strong>Get Personalized Recommendations</strong><small>Discover books picked for your interests</small></span><b>→</b></a>
+    </aside>
+  </section>
+  <section class="middle-grid" id="explore">
+    <div class="panel genres-panel" id="genres"><div class="section-heading"><div><h2>Popular Genres</h2><span class="heading-line"></span></div><a href="#genres">View All →</a></div>
+      <div class="genre-grid">
+        <button class="genre-card fantasy" data-genre="Fantasy"><span class="genre-symbol">♧</span><b>Fantasy</b></button>
+        <button class="genre-card scifi" data-genre="Science Fiction"><span class="genre-symbol">✧</span><b>Science Fiction</b></button>
+        <button class="genre-card romance" data-genre="Romance"><span class="genre-symbol">♡</span><b>Romance</b></button>
+        <button class="genre-card mystery" data-genre="Mystery"><span class="genre-symbol">⌕</span><b>Mystery</b></button>
+        <button class="genre-card selfhelp" data-genre="Self-Help"><span class="genre-symbol">❧</span><b>Self-Help</b></button>
+        <button class="genre-card tech" data-genre="Technology"><span class="genre-symbol">▣</span><b>Technology</b></button>
+      </div>
+    </div>
+    <div class="panel top-panel"><div class="section-heading"><div><h2>Top Rated Books</h2><span class="heading-line"></span></div><a href="#recommendations">View All →</a></div><div class="top-books" id="topBooks">{% for book in books[6:10] %}<article class="top-book"><img src="{{ book.cover }}" alt="{{ book.title }} cover" loading="lazy"><strong>{{ book.title }}</strong><span class="rating">★ {{ book.rating }}</span></article>{% endfor %}</div></div>
+  </section>
+  <section class="bottom-grid" id="recommendations">
+    <div class="panel recommendations-panel"><div class="section-heading"><div><h2>Recommended for You</h2><p>Handpicked reads to match your interests</p></div><a href="#recommendations">View All →</a></div><div class="recommendation-grid" id="recommendationGrid">{% for book in books[:6] %}<article class="book-card"><button class="heart" aria-label="Add {{ book.title }} to favorites">♡</button><img src="{{ book.cover }}" alt="{{ book.title }} cover" loading="lazy"><div class="book-info"><strong>{{ book.title }}</strong><small>{{ book.author }}</small><div class="book-meta"><span class="rating">★ {{ book.rating }}</span><button class="view-button" data-title="{{ book.title }}">View</button></div></div></article>{% endfor %}</div><p class="empty-state" id="emptyState" hidden>No books found. Try another search or genre.</p></div>
+    <aside class="discover-banner" id="about"><div class="banner-content"><p class="eyebrow">FIND YOUR NEXT ADVENTURE</p><h2>Read More,<br><span>Discover More</span></h2><p>Let our recommendation engine help you find your next great read.</p><a href="#genres" class="cta">Explore Books <b>→</b></a></div><div class="banner-still-life"><div class="stack-book stack-one"></div><div class="stack-book stack-two"></div><div class="stack-book stack-three"></div><div class="mug">♡</div><div class="small-plant">♣</div></div></aside>
+  </section>
+  <footer><span>▣ Book<span class="green">Recommender</span></span><span>Find a story worth staying up for.</span><span>Made for readers ♥</span></footer>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body></html>
